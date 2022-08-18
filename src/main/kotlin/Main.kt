@@ -4,6 +4,7 @@ fun main(args: Array<String>) {
     val options = arrayOf("Rock", "Paper", "Scissors")
     val gameChoice = getGameChoice(options)
     val userChoice = getUserChoice(options)
+    val result = printResult(userChoice, gameChoice)
 }
 fun getGameChoice(optionsParam: Array<String>) =
     optionsParam[(Math.random() * optionsParam.size).toInt()]
