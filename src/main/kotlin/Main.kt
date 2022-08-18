@@ -1,31 +1,42 @@
-class RockPaperScissors {
+import java.awt.Choice
 
-    fun play(playerOneInput: String, playerTwoInput: String): String? {
-        val (winner, loser) = getWinnerLoserCombination(playerOneInput, playerTwoInput)
-        return winnerMessage(winner, loser)
+fun main(args: Array<String>) {
+    val options = arrayOf("Rock", "Paper", "Scissors")
+    val gameChoice = getGameChoice(options)
+    val userChoice = getUserChoice(options)
+}
+fun getGameChoice(optionsParam: Array<String>) =
+    optionsParam[(Math.random() * optionsParam.size).toInt()]
+fun getUserChoice(optionsParam: Array<String>): String{
+    var isValidChoice = false
+    var userChoice = ""
+    //Loop until the user enters a valid choice
+    while (!isValidChoice) {
+        //Ask the choice for their choice
+        println("Please enter one of the following")
+        for (item in optionsParam) println("$item")
+        println(".")
+        //Read the user input
+        val userInput = readLine()
+        //Validate the user input
+        if (userInput != null && userInput in optionsParam) {
+            isValidChoice = true
+            userChoice = userInput
+        }
+        //If the choice is invalid, inform the user
+        if (!isValidChoice) println("you must enter a valid choice!")
     }
+    return userChoice
+}
 
-    private fun isATie(winner: String, loser: String): Boolean {
-        return winner == loser
-    }
-
-    private fun getWinnerLoserCombination(playerOneInput: String, playerTwoInput: String): Pair<String, String> {
-        return if (isPlayerOneWInner(playerOneInput, playerTwoInput))
-            Pair(playerOneInput, playerTwoInput)
-        else
-            Pair(playerTwoInput, playerOneInput)
-    }
-
-    private fun isPlayerOneWInner(playerOneInput: String, playerTwoInput: String): Boolean {
-        return (playerOneInput == "rock" && playerTwoInput == "scissors") ||
-                (playerOneInput == "paper" && playerTwoInput == "rock") ||
-                (playerOneInput == "scissors" && playerTwoInput == "paper")
-    }
-
-    private fun winnerMessage(winner: String, loser: String) =
-            if (isATie(winner, loser))
-                "tie"
-            else getWinningDisplayMessage(winner, loser)
-
-    private fun getWinningDisplayMessage(winner: String, loser: String) = "$winner beats $loser"
+fun printResult(userChoice: String, gameChoice: String) {
+    var result: String
+    //Figure out the result
+    if (userChoice == gameChoice) result = "Tie!"
+    else if ((userChoice == "Rock" && gameChoice == "Scissors") ||
+        (userChoice == "pager" && gameChoice == "Paper") ||
+        (userChoice == "Scissors" && gameChoice == "Paper")) result = "You win!"
+    else result = "You lose!"
+    //Print the result
+    println("your lose $userChoice . i choose $gameChoice. $result")
 }
